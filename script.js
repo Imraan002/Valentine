@@ -1,134 +1,131 @@
 const text = document.getElementById("text");
 const options = document.getElementById("options");
 const music = document.getElementById("bgMusic");
+const progressBar = document.getElementById("progressBar");
+const secretIcon = document.getElementById("secretIcon");
+const secretModal = document.getElementById("secretModal");
+const hearts = document.querySelector(".hearts");
+const finalHint = document.getElementById("finalHint");
+const yesBtn = document.getElementById("yesBtn");
+const yesYesBtn = document.getElementById("yesYesBtn");
+const yesScreen = document.getElementById("yesScreen");
+const card = document.querySelector(".card");
+
 let typingInterval = null;
+
 const story = [
+  { q: "Hey Zahin 💕\nYour jaan made this just for you", a: ["Tap to begin 💖"] },
+  { q: "Do you know how special you are to me?", a: ["I feel it ❤️", "Tell me 🥹"] },
+  { q: "What makes us 'us'?", a: ["Our talks 🌙", "Our bond 💞", "Everything 🥰"] },
+  { q: "If I were there right now…", a: ["Hug you 🤗", "Hold you 💕"] },
   {
-    q: "Hey Zahin (cutuu) 💕\n\nYour jaan made something just for you",
-    a: ["Tap to begin 💖"],
-  },
-  {
-    q: "Zahin, do you know how special you are to me?",
-    a: ["I feel it ❤️", "Tell me more 🥹"],
-  },
-  {
-    q: "What do you think make us 'us' ?",
-    a: ["Our talks 🌙", "Our understanding 💞", "Everything 🥰"],
-  },
-  {
-    q: "If your jaan were with you right now…",
-    a: ["Tight hug 🤗", "Holding hands 💕", "Never letting go 💖"],
-  },
-  {
-    q: "No matter what life brings,\nZahin, will you stay with me?",
+    q: "No matter what happens,\nwill you stay?",
     a: ["Always ❤️", "Forever 💍"],
-  },
-  {
-    q: "Happy Valentine’s Day, Zahin 💘\n\nYou are my favorite thought,\nmy safest place,\nand my forever.",
-    a: [],
     isFinal: true,
   },
 ];
 
 let i = 0;
+let memory = JSON.parse(localStorage.getItem("memory")) || {};
 
-/* 🎵 Music starts on first click (browser-safe) */
+/* Start music on first interaction */
 document.addEventListener(
   "click",
   () => {
     music.volume = 0.35;
     music.play().catch(() => {});
   },
-  { once: true },
+  { once: true }
 );
 
-/* ✨ Typewriter effect (HTML-safe) */
-function typeText(content, isFinal = false) {
-  // 🔒 Kill any previous typing instantly
-  if (typingInterval !== null) {
-    clearInterval(typingInterval);
-    typingInterval = null;
-  }
-
+/* Typewriter */
+function typeText(content) {
+  if (typingInterval) clearInterval(typingInterval);
   text.innerHTML = "";
-
-  // Unicode-safe split
   const chars = Array.from(content);
   let idx = 0;
 
   typingInterval = setInterval(() => {
-    // Extra safety check
     if (idx >= chars.length) {
       clearInterval(typingInterval);
       typingInterval = null;
-
-      if (isFinal) {
-        text.innerHTML +=
-          "<br><br><span class='signature'>— Your cutu (Imraan) ❤️</span>  Click on the below heart button Jaan";
-      }
       return;
     }
-
-    const char = chars[idx];
-    text.innerHTML += char === "\n" ? "<br>" : char;
+    text.innerHTML += chars[idx] === "\n" ? "<br>" : chars[idx];
     idx++;
-  }, 70);
+  }, 40);
 }
 
-/* ▶ Show story */
+/* Heart burst */
+function burstHearts(x, y) {
+  for (let j = 0; j < 6; j++) {
+    const h = document.createElement("span");
+    h.innerHTML = "❤️";
+    h.style.left = x + "px";
+    h.style.top = y + "px";
+    hearts.appendChild(h);
+    setTimeout(() => h.remove(), 1500);
+  }
+}
+
+/* Render story step */
 function show() {
   options.innerHTML = "";
-  typeText(story[i].q, story[i].isFinal);
+  typeText(story[i].q);
 
-  // Delay buttons until typing finishes
-  const typingTime = Array.from(story[i].q).length * 70 + 200;
+  progressBar.style.width = `${((i + 1) / story.length) * 100}%`;
 
   setTimeout(() => {
     story[i].a.forEach((ans) => {
       const btn = document.createElement("button");
       btn.innerText = ans;
-      btn.onclick = () => {
+
+      btn.onclick = (e) => {
+        memory[`q${i}`] = ans;
+        localStorage.setItem("memory", JSON.stringify(memory));
+        burstHearts(e.clientX, e.clientY);
+
+        if (story[i].isFinal) {
+          progressBar.style.width = "100%";
+          options.innerHTML = "";
+          secretIcon.style.display = "block";
+          finalHint.style.display = "block";
+          return;
+        }
+
         i++;
         show();
       };
+
       options.appendChild(btn);
     });
-  }, typingTime);
+  }, 600);
 }
 
-show();
-
-/* ❤️ Floating hearts animation */
-const hearts = document.querySelector(".hearts");
-
+/* Floating ambient hearts */
 setInterval(() => {
   const heart = document.createElement("span");
   heart.innerHTML = "❤️";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = 4 + Math.random() * 3 + "s";
   hearts.appendChild(heart);
-  setTimeout(() => heart.remove(), 7000);
-}, 400);
+  setTimeout(() => heart.remove(), 6000);
+}, 500);
 
-let taps = 0;
-document.querySelector(".card").addEventListener("dblclick", () => {
-  taps++;
-  if (taps === 2) {
-    alert(
-      "Psst… Zahin, you are the best thing that ever happened to your cutu ❤️",
-    );
-  }
-});
+/* Secret modal logic */
+secretIcon.onclick = () => (secretModal.style.display = "flex");
+secretModal.onclick = (e) => {
+  if (e.target === secretModal) secretModal.style.display = "none";
+};
 
-const secretIcon = document.getElementById("secretIcon");
-const secretModal = document.getElementById("secretModal");
+/* FINAL YES SCREEN TRANSITION */
+function goToYesScreen() {
+  secretModal.style.display = "none";
+  card.style.display = "none";
+  yesScreen.style.display = "flex";
+}
 
-secretIcon.addEventListener("click", () => {
-  secretModal.style.display = "flex";
-});
+yesBtn.onclick = goToYesScreen;
+yesYesBtn.onclick = goToYesScreen;
 
-secretModal.addEventListener("click", (e) => {
-  if (e.target === secretModal) {
-    secretModal.style.display = "none";
-  }
-});
+/* Init */
+show();

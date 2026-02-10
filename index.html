@@ -4,42 +4,68 @@
     <meta charset="UTF-8" />
     <title>For Zahin ❤️</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <!-- 🎵 Background Music -->
+    <!-- Background Music -->
     <audio id="bgMusic" loop preload="auto">
       <source src="./love.mp3" type="audio/mpeg" />
     </audio>
 
-    <!-- ❤️ Floating hearts -->
+    <!-- Floating hearts -->
     <div class="hearts"></div>
 
-    <!-- 💌 Main Card -->
+    <!-- Main Card -->
     <div class="card">
+      <!-- Progress bar -->
+      <div class="progress">
+        <div id="progressBar"></div>
+      </div>
+
+      <!-- Story text -->
       <h1 id="text"></h1>
+
+      <!-- Final hint -->
+      <div id="finalHint">
+        ⬇ There's a secret msg for u Jaan... click on the letter below
+      </div>
+
+      <!-- Options -->
       <div id="options"></div>
 
-      <!-- Secret Love Note Icon (centered) -->
+      <!-- Secret Icon -->
       <div id="secretIcon">💌</div>
     </div>
 
-    <!-- 💕 Secret Message Modal -->
+    <!-- Secret Modal -->
     <div id="secretModal">
       <div class="secretCard">
         <p>
           Zahin 💕<br /><br />
-          You are the best thing that ever happened to me ❤️<br /><br />
-          Our story was already written in the stars 💫✨
-          I love you sooo muchh ❤️❤️<br /><br />
-          I want to spend the rest of my life with YOU !!!
+          You are the best thing that ever happened to me ❤️<br />
+          Our story was written long before we met ✨<br />
+          I feel complete with you<br />
+          I loveeeeee youuuuuu ♾️<br /><br />
+          Will you marry me? 💍
         </p>
+
+        <div style="margin-top: 16px;">
+          <button id="yesBtn">Yes</button>
+          <button id="yesYesBtn">Yes Yes Yes</button>
+        </div>
       </div>
+    </div>
+
+    <!-- YES SCREEN (FULL IMAGE) -->
+    <div id="yesScreen">
+      <img src="./she_said_yes.jpeg" alt="She said yes" />
     </div>
 
     <script src="script.js"></script>
