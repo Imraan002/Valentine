@@ -53,7 +53,7 @@ function typeText(content) {
     }
     text.innerHTML += chars[idx] === "\n" ? "<br>" : chars[idx];
     idx++;
-  }, 40);
+  }, 100);
 }
 
 /* Heart burst */
@@ -121,8 +121,16 @@ secretModal.onclick = (e) => {
 function goToYesScreen() {
   secretModal.style.display = "none";
   card.style.display = "none";
+
+  music.pause();
+  music.src = "./forever.mp3";
+  music.load();
+  music.volume = 0.5;
+  music.play().catch(() => {});
+
   yesScreen.style.display = "flex";
 }
+
 
 yesBtn.onclick = goToYesScreen;
 yesYesBtn.onclick = goToYesScreen;
