@@ -25,6 +25,16 @@ body {
   animation: fadeIn 1s ease;
 }
 
+/* Valentine Title (FIRST SCREEN) */
+#valentineText {
+  font-family: "Dancing Script", cursive;
+  font-size: 38px;
+  color: #ff4f7a;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  text-align: center;
+}
+
 /* Progress bar */
 .progress {
   width: 100%;
@@ -142,7 +152,6 @@ button:active {
   }
 }
 
-
 #finalHint {
   display: none;
   font-size: 13px;
@@ -159,8 +168,7 @@ button:active {
   100% { opacity: 0.4; }
 }
 
-
-/* YES SCREEN — full image takeover */
+/* YES SCREEN */
 #yesScreen {
   position: fixed;
   inset: 0;
@@ -175,4 +183,13 @@ button:active {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+#valentineText {
+  font-family: "Dancing Script", cursive;
+  font-size: 42px;
+  color: #ff2e63;
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 600;
+  display: block;
 }

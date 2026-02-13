@@ -14,12 +14,12 @@ const card = document.querySelector(".card");
 let typingInterval = null;
 
 const story = [
-  { q: "Hey Zahin 💕\nYour jaan made this just for you", a: ["Tap to begin 💖"] },
-  { q: "Do you know how special you are to me?", a: ["I feel it ❤️", "Tell me 🥹"] },
-  { q: "What makes us 'us'?", a: ["Our talks 🌙", "Our bond 💞", "Everything 🥰"] },
-  { q: "If I were there right now…", a: ["Hug you 🤗", "Hold you 💕"] },
+  { q: "Hey Zahin 💕\nI made this just for you 🫵", a: ["Tap to begin 💖"] },
+  { q: "Do you know how special you are to me? ✨💫", a: ["I feel it ❤️", "Tell me 🥹"] },
+  { q: "What makes us 'us' 🫂?", a: ["Our talks 🌙", "Our bond 💞", "Everything 🥰"] },
+  { q: "If I were there right now…🥺", a: ["Hug you 🤗", "Hold you 💕"] },
   {
-    q: "No matter what happens,\nwill you stay?",
+    q: "No matter what happens,\nwill you stay ♾️?",
     a: ["Always ❤️", "Forever 💍"],
     isFinal: true,
   },
